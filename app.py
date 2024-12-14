@@ -25,7 +25,7 @@ def main():
     color_scale = st.sidebar.slider(
         "Color Scale",
         min_value=0.1,
-        max_value=255.0,
+        max_value=50.0,
         value=10.0,
         step=0.1,
         disabled=not color_mode,

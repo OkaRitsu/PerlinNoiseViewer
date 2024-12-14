@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import noise
 import numpy as np
 
-WIDTH, HEIGHT = 1024, 1024
-BASE_SCALE = 100.0
+WIDTH, HEIGHT = 250, 250
+BASE_SCALE = 25.0
 
 
 def generate_noise(color_mode, octaves, persistence, lacunarity, color_scale):
