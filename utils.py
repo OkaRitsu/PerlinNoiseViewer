@@ -1,15 +1,21 @@
 import matplotlib.pyplot as plt
 
 
-def plot_graph(normalized_noise, color_mode):
+def plot_graph(normalized_noise, color_mode, num_grids=0):
     fig, ax = plt.subplots(figsize=(5, 5))
     ax.set_ylim(0, 1)
+    idx = 0
     if color_mode:
-        ax.plot(normalized_noise[0, :, 0], color="red")
-        ax.plot(normalized_noise[0, :, 1], color="green")
-        ax.plot(normalized_noise[0, :, 2], color="blue")
+        ax.plot(normalized_noise[idx, :, 0], color="red")
+        ax.plot(normalized_noise[idx, :, 1], color="green")
+        ax.plot(normalized_noise[idx, :, 2], color="blue")
     else:
-        ax.plot(normalized_noise[0, :], color="gray")
+        ax.plot(normalized_noise[idx, :], color="gray")
+    if num_grids > 0 and num_grids < 20:
+        w = normalized_noise.shape[0]
+        for i in range(0, w + 1, w // num_grids):
+            ax.axvline(i, color="black", linestyle="--")
+
     ax.set_xlabel("X")
     ax.set_ylabel("Noise Value")
     ax.set_title("Y=0")

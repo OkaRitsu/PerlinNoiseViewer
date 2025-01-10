@@ -19,6 +19,7 @@ def main():
     lacunarity = st.sidebar.slider(
         "Lacunarity", min_value=0.01, max_value=5.0, value=2.0, step=0.01
     )
+    num_grids = st.sidebar.number_input("Grids", min_value=1, max_value=512, value=10)
 
     # カラー化
     color_mode = st.sidebar.checkbox("Color Mode")
@@ -38,29 +39,35 @@ def main():
         "lacunarity": lacunarity,
         "color_mode": color_mode,
         "color_scale": color_scale,
+        "num_grids": num_grids,
     }
     save_params_to_json(params)
 
     st.markdown("# Perlin Noise Viewer")
 
     noise_array = generate_noise(
-        color_mode, octaves, persistence, lacunarity, color_scale
+        color_mode,
+        octaves,
+        persistence,
+        lacunarity,
+        num_grids,
+        color_scale,
     )
     normalized_noise = normalize(noise_array)
 
     col1, col2 = st.columns(2)
-    prefix = f"oct_{octaves}-per_{persistence}-lac_{lacunarity}"
+    prefix = f"oct_{octaves}-per_{persistence}-lac_{lacunarity}-grid_{num_grids}"
     prefix += f"-color_{color_scale}" if color_mode else "-gray"
     filename = f"{prefix}.png"
 
     with col1:
         # ノイズ画像の表示
-        fig1 = plot_noise(normalized_noise, color_mode)
+        fig1 = plot_noise(normalized_noise, color_mode, num_grids)
         st.pyplot(fig1)
         save_image(normalized_noise, filename)
 
     with col2:
-        fig2 = plot_graph(normalized_noise, color_mode)
+        fig2 = plot_graph(normalized_noise, color_mode, num_grids)
         st.pyplot(fig2)
         save_plot(fig2, "graph_" + filename)
 
